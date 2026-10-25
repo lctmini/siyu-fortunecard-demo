@@ -15,7 +15,7 @@ function jsonResponse(status, data) {
   });
 }
 
-export default async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod === "OPTIONS") {
     return new Response(null, { status: 204 });
   }
