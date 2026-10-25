@@ -1,31 +1,23 @@
-```javascript
 import {
   supabase,
+  reply,
   readBody,
   getPlayer,
-  todayBangkok
+  todayBangkok,
+  headers
 } from "./_shared.mjs";
 
-function jsonResponse(status, data) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8"
-    }
-  });
-}
-
-export const handler = async (event) => {
-  if (event.httpMethod === "OPTIONS") {
-    return new Response(null, { status: 204 });
+export default async (request) => {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers });
   }
 
-  if (event.httpMethod !== "POST") {
-    return jsonResponse(405, { error: "Method not allowed" });
+  if (request.method !== "POST") {
+    return reply(405, { error: "Method not allowed" });
   }
 
   try {
-    const { token } = readBody(event);
+    const { token } = await readBody(request);
     const player = await getPlayer(token);
     const today = todayBangkok();
 
@@ -64,23 +56,22 @@ export const handler = async (event) => {
       throw ce || oe || fe || de;
     }
 
-    return jsonResponse(200, {
+    return reply(200, {
       player,
       cards: cards || [],
-      collection: (collection || []).map((x) => ({
-        card_id: x.card_id,
-        quantity: x.quantity,
-        card: x.cards
+      collection: (collection || []).map((item) => ({
+        card_id: item.card_id,
+        quantity: item.quantity,
+        card: item.cards
       })),
       fortune: fortune || null,
       draws_left: Math.max(0, 3 - (drawCount || 0))
     });
-  } catch (e) {
-    console.error("me function error:", e);
+  } catch (error) {
+    console.error("me function error:", error);
 
-    return jsonResponse(500, {
-      error: e?.message || "Server error"
+    return reply(500, {
+      error: error?.message || "Server error"
     });
   }
 };
-```
