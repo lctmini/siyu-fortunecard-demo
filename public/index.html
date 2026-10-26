@@ -60,7 +60,12 @@ th:{
   duplicate:'ซ้ำ',
   all:'การ์ดทั้งหมด',
   have:'มีแล้ว',
-  missing:'ยังไม่มี'
+  missing:'ยังไม่มี',
+  luckyColorLabel:'สีมงคล', luckyItemLabel:'ไอเทมมงคล', missionLabel:'ภารกิจประจำวัน',
+  energyLabel:'พลังงานประจำวัน', fortuneFallback:'ขอให้วันนี้มีโมเมนต์เล็ก ๆ ที่ทำให้คุณยิ้มได้ 💜🩵',
+  colors:{purple:'สีม่วง',blue:'สีฟ้า',pink:'สีชมพู',white:'สีขาว',green:'สีเขียว',yellow:'สีเหลือง'},
+  items:{photocard:'โฟโต้การ์ด',earphones:'หูฟัง',notebook:'สมุดโน้ต',drink:'เครื่องดื่มแก้วโปรด',plushie:'ตุ๊กตา'},
+  missions:{music:'ฟังเพลงโปรดของ SiYu สักเพลง',kind:'ใจดีกับตัวเองและพักผ่อนให้เพียงพอ',memory:'ย้อนดูโมเมนต์ SiYu ที่ชอบหนึ่งโมเมนต์',share:'ส่งต่อความสุขหรือคำชมให้ใครสักคน'}
 },
 
 en:{
@@ -98,7 +103,12 @@ en:{
   duplicate:'DUPLICATE',
   all:'All cards',
   have:'Collected',
-  missing:'Missing'
+  missing:'Missing',
+  luckyColorLabel:'Lucky color', luckyItemLabel:'Lucky item', missionLabel:'Daily mission',
+  energyLabel:'YOUR DAILY ENERGY', fortuneFallback:'May a little moment keep you smiling today. 💜🩵',
+  colors:{purple:'Purple',blue:'Sky blue',pink:'Pink',white:'White',green:'Green',yellow:'Yellow'},
+  items:{photocard:'Photocard',earphones:'Earphones',notebook:'Notebook',drink:'Favorite drink',plushie:'Plushie'},
+  missions:{music:'Listen to a favorite SiYu song.',kind:'Be kind to yourself and get enough rest.',memory:'Revisit one favorite SiYu moment.',share:'Share a kind word or a little happiness with someone.'}
 },
 
 ko:{
@@ -136,7 +146,12 @@ ko:{
   duplicate:'중복',
   all:'전체 카드',
   have:'보유',
-  missing:'미보유'
+  missing:'미보유',
+  luckyColorLabel:'행운의 색', luckyItemLabel:'행운의 아이템', missionLabel:'오늘의 미션',
+  energyLabel:'오늘의 에너지', fortuneFallback:'오늘도 작은 순간이 미소를 가져다주길 바라요. 💜🩵',
+  colors:{purple:'보라색',blue:'하늘색',pink:'분홍색',white:'흰색',green:'초록색',yellow:'노란색'},
+  items:{photocard:'포토카드',earphones:'이어폰',notebook:'노트',drink:'좋아하는 음료',plushie:'인형'},
+  missions:{music:'좋아하는 SiYu 노래를 들어 보세요.',kind:'자신에게 친절하게 대하고 충분히 쉬세요.',memory:'좋아하는 SiYu 순간을 다시 감상해 보세요.',share:'누군가에게 따뜻한 말이나 작은 행복을 전해 보세요.'}
 },
 
 ja:{
@@ -174,7 +189,12 @@ ja:{
   duplicate:'重複',
   all:'すべてのカード',
   have:'所持済み',
-  missing:'未所持'
+  missing:'未所持',
+  luckyColorLabel:'ラッキーカラー', luckyItemLabel:'ラッキーアイテム', missionLabel:'今日のミッション',
+  energyLabel:'今日のエネルギー', fortuneFallback:'今日も小さな瞬間が笑顔につながりますように。💜🩵',
+  colors:{purple:'紫',blue:'水色',pink:'ピンク',white:'白',green:'緑',yellow:'黄色'},
+  items:{photocard:'フォトカード',earphones:'イヤホン',notebook:'ノート',drink:'お気に入りの飲み物',plushie:'ぬいぐるみ'},
+  missions:{music:'お気に入りのSiYuの曲を聴いてみよう。',kind:'自分に優しくして、しっかり休もう。',memory:'お気に入りのSiYuの瞬間を見返そう。',share:'誰かに優しい言葉や小さな幸せを届けよう。'}
 }
   
 };
@@ -187,7 +207,7 @@ function setPanel(name){document.querySelectorAll('.panel').forEach(x=>x.classLi
 function cardImagePath(c){
   // Prefer the new filename-based slug (e.g. sion-n-001); fall back to sort_order for old slugs.
   const slug=String(c.slug||'').toLowerCase().replace(/\.(jpg|jpeg|png|webp)$/i,'');
-  if(/^(sion-n|yushi-n|siyu-r|siyu-sr|siyu-ssr)-\d{3}$/.test(slug)) return `/cards/${slug}.jpg`;
+  if(/^(sion-n|yushi-n|siyu-r|siyu-sr|siyu-ssr)-\d{3}$/.test(slug)) return c.image_url || `/cards/${slug}.jpg`;
   const n=Number(c.sort_order||c.id);
   let filename='';
   if(n>=1&&n<=15) filename=`sion-n-${String(n).padStart(3,'0')}`;
@@ -207,22 +227,48 @@ function cardArt(c, revealed=true){
   return `<div class="tarot"><div class="art">${art}</div><div class="overlay"></div><div class="rarity">${escapeHtml(c.rarity||'N')} · ${escapeHtml(c.moment_tag||'SIYU')}</div><div class="cardname">${secret?'SECRET':escapeHtml(c.name_en||c.slug)}</div><div class="caption">${secret?'Unlock this card to reveal the moment.':escapeHtml(c.caption_en||'A little SiYu moment ✦')}</div></div>`
 }
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-async function refresh(){const data=await api('me',{token:token()});state.player=data.player;state.cards=data.cards;state.collection=data.collection;state.drawsLeft=data.draws_left;state.fortune=data.fortune;renderStats();renderAlbum();$('player').textContent='PLAYER ID: '+state.player.player_id;$('drawLeft').textContent=state.drawsLeft;$('drawBtn').disabled=!state.fortune||state.drawsLeft<=0;$('fortuneBtn').disabled=!!state.fortune;$('fortuneBtn').textContent=state.fortune?t('fortuneDone'):t('fortuneBtn');$('fortuneStatus').textContent=state.fortune?(state.fortune.message_en||t('fortuneDone')):'';renderFortune(state.fortune)}
+async function refresh(){const data=await api('me',{token:token()});state.player=data.player;state.cards=data.cards;state.collection=data.collection;state.drawsLeft=data.draws_left;state.fortune=data.fortune;renderStats();renderAlbum();$('player').textContent='PLAYER ID: '+state.player.player_id;$('drawLeft').textContent=state.drawsLeft;$('drawBtn').disabled=!state.fortune||state.drawsLeft<=0;$('fortuneBtn').disabled=!!state.fortune;$('fortuneBtn').textContent=state.fortune?t('fortuneDone'):t('fortuneBtn');$('fortuneStatus').textContent=state.fortune?t('fortuneDone'):'';renderFortune(state.fortune)}
 function fortuneImagePath(f){
-  // Match the image filename to the fortune's English title, e.g. A Little Magic -> /fortune/a-little-magic.jpg
+  // Match the image filename to the fortune's English title, e.g. Lucky Orbit -> /fortune/lucky-orbit.gif
   const title=String(f?.title_en||f?.title||'').normalize('NFKD').toLowerCase().trim();
   const slug=title.replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  return slug ? `/fortune/${slug}.jpg` : '';
+  return slug ? `/fortune/${slug}.gif` : '';
+}
+function localizedField(f, key, fallback=''){
+  if(!f) return fallback;
+  return f[`${key}_${lang}`] ?? f[key] ?? fallback;
+}
+function localizedValue(value, group){
+  if(value==null || value==='') return '';
+  const key=String(value).trim().toLowerCase().replace(/[^a-z]+/g,'');
+  const aliases={
+    purple:'purple',violet:'purple',สีม่วง:'purple',보라색:'purple',紫:'purple',
+    blue:'blue',skyblue:'blue',lightblue:'blue',สีฟ้า:'blue',하늘색:'blue',水色:'blue',
+    pink:'pink',สีชมพู:'pink',분홍색:'pink',ピンク:'pink',
+    white:'white',สีขาว:'white',흰색:'white',白:'white',
+    green:'green',สีเขียว:'green',초록색:'green',緑:'green',
+    yellow:'yellow',สีเหลือง:'yellow',노란색:'yellow',黄色:'yellow',
+    photocard:'photocard',โฟโต้การ์ด:'photocard',포토카드:'photocard',フォトカード:'photocard',
+    earphones:'earphones',หูฟัง:'earphones',이어폰:'earphones',イヤホン:'earphones',
+    notebook:'notebook',สมุดโน้ต:'notebook',노트:'notebook',ノート:'notebook',
+    drink:'drink',favoritedrink:'drink',เครื่องดื่มแก้วโปรด:'drink',좋아하는음료:'drink',お気に入りの飲み物:'drink',
+    plushie:'plushie',ตุ๊กตา:'plushie',인형:'plushie',ぬいぐるみ:'plushie'
+  };
+  const canonical=aliases[key]||aliases[String(value).trim()]||key;
+  return dict[lang]?.[group]?.[canonical] || String(value);
 }
 function renderFortune(f){
   if(!f){
     $('fortuneResult').innerHTML=`<div><div style="font-size:2rem">🌙✨</div><strong id="fortuneWaiting">${escapeHtml(t('waiting'))}</strong><p class="tiny" id="fortunePrompt">${escapeHtml(t('prompt'))}</p></div>`;
     return;
   }
-  const title=f.title_en||f.title||'Daily Fortune';
-  const message=f.message_en||f.message||'May a little moment keep you smiling today. 💜🩵';
+  const title=localizedField(f,'title',localizedField(f,'title_en','Daily Fortune'));
+  const message=localizedField(f,'message',localizedField(f,'message_en',t('fortuneFallback')));
+  const color=localizedValue(localizedField(f,'lucky_color'),'colors');
+  const item=localizedValue(localizedField(f,'lucky_item'),'items');
+  const mission=localizedField(f,'daily_mission');
   const src=fortuneImagePath(f);
-  $('fortuneResult').innerHTML=`<div class="fortune-content"><div style="font-size:2rem">🔮✨</div><div class="eyebrow">YOUR DAILY ENERGY</div><h3>${escapeHtml(title)}</h3><img class="fortune-moment" src="${escapeHtml(src)}" alt="${escapeHtml(title)} moment" hidden><p>${escapeHtml(message)}</p>${f.lucky_color?`<p class="tiny"><b>Lucky color:</b> ${escapeHtml(f.lucky_color)}</p>`:''}${f.lucky_item?`<p class="tiny"><b>Lucky item:</b> ${escapeHtml(f.lucky_item)}</p>`:''}${f.daily_mission?`<p class="tiny"><b>Today’s mission:</b> ${escapeHtml(f.daily_mission)}</p>`:''}</div>`;
+  $('fortuneResult').innerHTML=`<div class="fortune-content"><div style="font-size:2rem">🔮✨</div><div class="eyebrow">${escapeHtml(t('energyLabel'))}</div><h3>${escapeHtml(title)}</h3><img class="fortune-moment" src="${escapeHtml(src)}" alt="${escapeHtml(title)}" hidden><p>${escapeHtml(message)}</p>${color?`<p class="tiny"><b>${escapeHtml(t('luckyColorLabel'))}:</b> ${escapeHtml(color)}</p>`:''}${item?`<p class="tiny"><b>${escapeHtml(t('luckyItemLabel'))}:</b> ${escapeHtml(item)}</p>`:''}${mission?`<p class="tiny"><b>${escapeHtml(t('missionLabel'))}:</b> ${escapeHtml(mission)}</p>`:''}</div>`;
   const img=$('fortuneResult').querySelector('.fortune-moment');
   if(src){img.onload=()=>{img.hidden=false};img.onerror=()=>{img.hidden=true};}
 }
@@ -230,7 +276,7 @@ function renderStats(){const total=state.collection.reduce((n,c)=>n+c.quantity,0
 function postCardToX(){const text='I vote for #NCTWISH on #2026MAMAVOTE';const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);window.open(url,'_blank','noopener,noreferrer')}
 function renderAlbum(){if(!state.cards.length)return;const rarity=$('rarityFilter').value,owned=$('ownedFilter').value;const ownedMap=new Map(state.collection.map(c=>[c.card_id,c.quantity]));$('collection').innerHTML=state.cards.filter(c=>(rarity==='all'||c.rarity===rarity)&&(owned==='all'||(owned==='owned'?ownedMap.has(c.id):!ownedMap.has(c.id)))).map(c=>`<div class="item ${ownedMap.has(c.id)?'':'locked'}">${cardArt(c, ownedMap.has(c.id)||!['SR','SSR'].includes(String(c.rarity||'').toUpperCase()))}<div class="tiny">×${ownedMap.get(c.id)||0}</div>${ownedMap.has(c.id)?'<button type="button" class="share-x-btn" onclick="postCardToX()">โพสต์ลง X เพื่อร่วมโหวต MAMA</button>':''}</div>`).join('')}
 async function init(){try{await refresh()}catch(e){showStatus('gachaStatus','Setup needed: deploy this project and configure Netlify/Supabase.');console.error(e)}}
-$('lang').addEventListener('change',e=>{lang=e.target.value;document.documentElement.lang=lang;Object.entries({subtitle:'subtitle',navFortune:'fortune',navGacha:'gacha',navAlbum:'album',fortuneHeading:'fortuneHeading',fortuneDesc:'fortuneDesc',fortuneWaiting:'waiting',fortunePrompt:'prompt',fortuneBtn:'fortuneBtn',dailyHeading:'daily',dailyDesc:'dailyDesc',leftLabel:'left',ownedLabel:'owned',uniqueLabel:'unique',goGacha:'go',resetNote:'reset',gachaHeading:'gachaHeading',gachaDesc:'gachaDesc',drawBtn:'draw',imageNote:'imageNote',albumHeading:'albumHeading',albumDesc:'albumDesc',albumOwnedLabel:'total',albumUniqueLabel:'unique',albumProgressLabel:'progress',albumNote:'albumNote'}).forEach(([id,k])=>{const el=$(id);if(el)el.textContent=t(k)});$('ownedFilter').options[0].text=t('all');$('ownedFilter').options[1].text=t('have');$('ownedFilter').options[2].text=t('missing');renderAlbum()});
+$('lang').addEventListener('change',e=>{lang=e.target.value;document.documentElement.lang=lang;Object.entries({subtitle:'subtitle',navFortune:'fortune',navGacha:'gacha',navAlbum:'album',fortuneHeading:'fortuneHeading',fortuneDesc:'fortuneDesc',fortuneWaiting:'waiting',fortunePrompt:'prompt',fortuneBtn:'fortuneBtn',dailyHeading:'daily',dailyDesc:'dailyDesc',leftLabel:'left',ownedLabel:'owned',uniqueLabel:'unique',goGacha:'go',resetNote:'reset',gachaHeading:'gachaHeading',gachaDesc:'gachaDesc',drawBtn:'draw',imageNote:'imageNote',albumHeading:'albumHeading',albumDesc:'albumDesc',albumOwnedLabel:'total',albumUniqueLabel:'unique',albumProgressLabel:'progress',albumNote:'albumNote'}).forEach(([id,k])=>{const el=$(id);if(el)el.textContent=t(k)});$('ownedFilter').options[0].text=t('all');$('ownedFilter').options[1].text=t('have');$('ownedFilter').options[2].text=t('missing');renderAlbum();renderFortune(state.fortune);if(state.fortune)$('fortuneStatus').textContent=t('fortuneDone')});
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>setPanel(b.dataset.panel)));$('goGacha').addEventListener('click',()=>setPanel('gacha'));$('rarityFilter').addEventListener('change',renderAlbum);$('ownedFilter').addEventListener('change',renderAlbum);
 $('fortuneBtn').addEventListener('click',async()=>{try{const r=await api('fortune',{token:token()});state.fortune=r.fortune;await refresh();renderFortune(state.fortune);showStatus('fortuneStatus',t('fortuneDone'))}catch(e){showStatus('fortuneStatus',e.message)}});
 $('drawBtn').addEventListener('click',async()=>{try{$('drawBtn').disabled=true;const r=await api('draw',{token:token()});$('latestCards').insertAdjacentHTML('afterbegin',cardArt(r.card));showStatus('gachaStatus',t('drawn'));await refresh();setPanel('gacha')}catch(e){showStatus('gachaStatus',e.message||t('error'));$('drawBtn').disabled=false}});
