@@ -76,6 +76,14 @@ const fortunes = [
   }
 ];
 
+async function awardPointsOnce(fortuneId) {
+  const { data, error } = await supabase.rpc("award_daily_fortune_points", {
+    p_fortune_id: fortuneId
+  });
+  if (error) throw error;
+  return Number(data ?? 0);
+}
+
 export default async (request) => {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers });
   if (request.method !== "POST") return reply(405, { error: "Method not allowed" });
@@ -90,7 +98,10 @@ export default async (request) => {
       .from("daily_fortunes").select("*")
       .eq("player_id", player.id).eq("fortune_date", date).maybeSingle();
     if (existingError) throw existingError;
-    if (existing) return reply(200, { fortune: existing });
+    if (existing) {
+      const points = await awardPointsOnce(existing.id);
+      return reply(200, { fortune: existing, points_awarded: points });
+    }
 
     const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
     const { data, error } = await supabase.from("daily_fortunes")
@@ -101,10 +112,14 @@ export default async (request) => {
       const { data: retry, error: retryError } = await supabase.from("daily_fortunes")
         .select("*").eq("player_id", player.id).eq("fortune_date", date).maybeSingle();
       if (retryError) throw retryError;
-      if (retry) return reply(200, { fortune: retry });
+      if (retry) {
+        const points = await awardPointsOnce(retry.id);
+        return reply(200, { fortune: retry, points_awarded: points });
+      }
       throw error;
     }
-    return reply(200, { fortune: data });
+    const points = await awardPointsOnce(data.id);
+    return reply(200, { fortune: data, points_awarded: points });
   } catch (error) {
     console.error("fortune function error:", error);
     return reply(500, { error: error?.message || "Server error" });
