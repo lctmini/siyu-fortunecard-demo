@@ -21,6 +21,14 @@ export default async (request) => {
     const player = await getPlayer(token);
     const today = todayBangkok();
 
+    const { data: playerStats, error: playerStatsError } = await supabase
+      .from("players")
+      .select("fortune_points")
+      .eq("id", player.id)
+      .single();
+    if (playerStatsError) throw playerStatsError;
+    const playerWithPoints = { ...player, fortune_points: playerStats?.fortune_points ?? 0 };
+
     const [
       { data: cards, error: ce },
       { data: collection, error: oe },
@@ -57,7 +65,7 @@ export default async (request) => {
     }
 
     return reply(200, {
-      player,
+      player: playerWithPoints,
       cards: cards || [],
       collection: (collection || []).map((item) => ({
         card_id: item.card_id,
