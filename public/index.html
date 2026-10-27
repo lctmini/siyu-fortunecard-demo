@@ -1,133 +1,343 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f4f0ff">
-  <title>SiYu Cardie — กำลังปิดปรับปรุง</title>
-  <style>
-    :root {
-      --purple: #9b83e8;
-      --purple-dark: #6650ad;
-      --blue: #8edcf4;
-      --blue-dark: #4b9ebc;
-      --cream: #fffdfb;
-      --ink: #554b6e;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      color: var(--ink);
-      font-family: "Noto Sans Thai", "Tahoma", sans-serif;
-      background:
-        radial-gradient(circle at 12% 18%, #e7e0ff 0, transparent 27%),
-        radial-gradient(circle at 88% 82%, #d9f6ff 0, transparent 29%),
-        linear-gradient(145deg, #fbf8ff, #f2fbff);
-      overflow: hidden;
-    }
-    .sparkle {
-      position: fixed;
-      user-select: none;
-      pointer-events: none;
-      opacity: .8;
-      animation: float 4s ease-in-out infinite;
-    }
-    .s1 { top: 11%; left: 12%; font-size: 28px; }
-    .s2 { top: 19%; right: 14%; font-size: 23px; animation-delay: -1s; }
-    .s3 { bottom: 15%; left: 17%; font-size: 25px; animation-delay: -2s; }
-    .s4 { bottom: 12%; right: 12%; font-size: 30px; animation-delay: -1.5s; }
-    .card {
-      position: relative;
-      width: min(100%, 620px);
-      padding: clamp(32px, 7vw, 64px) clamp(22px, 6vw, 54px);
-      text-align: center;
-      background: rgba(255, 253, 255, .88);
-      border: 1px solid rgba(173, 153, 231, .35);
-      border-radius: 32px;
-      box-shadow: 0 24px 70px rgba(111, 91, 163, .13);
-      backdrop-filter: blur(10px);
-    }
-    .flowers { font-size: clamp(27px, 5vw, 36px); letter-spacing: 8px; margin-bottom: 20px; }
-    .brand {
-      margin: 0 0 12px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(34px, 8vw, 54px);
-      font-weight: 700;
-      letter-spacing: .5px;
-      background: linear-gradient(100deg, var(--purple-dark), #8e80d9 48%, var(--blue-dark));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .pill {
-      display: inline-block;
-      margin: 8px 0 24px;
-      padding: 9px 17px;
-      border-radius: 999px;
-      color: #65549c;
-      background: #eee8ff;
-      border: 1px solid #ddd2ff;
-      font-size: 14px;
-      letter-spacing: .4px;
-    }
-    h1 {
-      margin: 0 auto 16px;
-      font-size: clamp(23px, 5vw, 32px);
-      line-height: 1.55;
-      font-weight: 700;
-    }
-    .message {
-      margin: 0;
-      font-size: clamp(16px, 3.8vw, 19px);
-      line-height: 2;
-      color: #756b88;
-    }
-    .message strong { color: #6b58b1; font-weight: 700; }
-    .divider {
-      width: 76px;
-      height: 3px;
-      margin: 27px auto;
-      border-radius: 99px;
-      background: linear-gradient(90deg, var(--purple), var(--blue));
-    }
-    .hearts { margin-top: 25px; font-size: 24px; letter-spacing: 7px; }
-    .footer {
-      margin-top: 30px;
-      font-size: 12px;
-      color: #a49ab6;
-      letter-spacing: 1.5px;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(-5deg); }
-      50% { transform: translateY(-10px) rotate(5deg); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .sparkle { animation: none; }
-    }
-  </style>
-</head>
-<body>
-  <span class="sparkle s1" aria-hidden="true">⭐</span>
-  <span class="sparkle s2" aria-hidden="true">💜</span>
-  <span class="sparkle s3" aria-hidden="true">🌷</span>
-  <span class="sparkle s4" aria-hidden="true">💙</span>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#e9e2ff"><title>SiYu Cardie · Tarot Gacha</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+:root{--ink:#302747;--muted:#786d91;--lav:#cbb8ff;--sky:#b8e8ff;--line:#dcd2f4;--cream:#fffdf9}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:Nunito,"Noto Sans Thai","Noto Sans KR","Noto Sans JP",sans-serif;background:linear-gradient(135deg,#eee8ff,#e7f6ff 55%,#f8edff);min-height:100vh}button,select{font:inherit}button{cursor:pointer}.app{max-width:1040px;margin:auto;padding:18px 14px 45px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.brand{font-weight:900;display:flex;gap:10px;align-items:center}.logo{display:grid;place-items:center;width:44px;height:44px;border:2px solid var(--ink);border-radius:13px;background:linear-gradient(135deg,#cbb8ff 50%,#b8e8ff 50%);box-shadow:3px 3px var(--ink)}.brand small{display:block;color:var(--muted);font-size:.68rem;letter-spacing:1px}.language{border:2px solid var(--line);border-radius:11px;padding:9px;background:white;color:var(--ink);max-width:130px}
+.hero,.box{background:#fffdf9ed;border:2px solid var(--ink);border-radius:20px;box-shadow:0 6px 0 #53437e20}.hero{text-align:center;padding:28px 15px;margin-bottom:16px}.eyebrow{letter-spacing:2px;font-size:.7rem;font-weight:900;color:#8d72d8}h1{font-size:clamp(1.8rem,6vw,3rem);margin:7px 0}h1 .p{color:#9275d8}h1 .b{color:#53addf}.hero p{color:var(--muted);margin:0 auto;max-width:600px}.player{display:inline-block;margin-top:14px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:7px 12px;font-size:.8rem;font-weight:900}
+.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.nav button,.btn{border:2px solid var(--ink);border-radius:13px;padding:11px 8px;font-weight:900;color:var(--ink);background:#fff;box-shadow:0 3px 0 #30274722}.nav button.active,.btn.primary{background:linear-gradient(100deg,#cdbaff,#bfeaff)}.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.box{padding:17px;min-width:0}.box h2{margin:0 0 5px;font-size:1.12rem}.desc,.tiny{color:var(--muted);font-size:.86rem;line-height:1.55}.btn{width:100%;margin-top:9px}.btn:disabled{opacity:.5;cursor:not-allowed}.fortune{min-height:170px;border:2px dashed #b6a4ed;border-radius:16px;padding:16px;background:linear-gradient(145deg,#f3edff,#edf9ff);display:grid;place-items:center;text-align:center}.fortune h3{margin:7px 0}.fortune-content{width:100%;max-width:520px}.fortune-moment{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid #dcd2f4;border-radius:12px;margin:12px auto;background:linear-gradient(135deg,#e8ddff,#d9f3ff)}.fortune-moment[hidden]{display:none}.stats{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.stat{flex:1;text-align:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px}.stat strong{display:block;font-size:1.1rem}.stat span{font-size:.72rem;color:var(--muted)}
+.gacha-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:15px 0}.tarot{width:min(42vw,210px);aspect-ratio:2/3;border:3px solid var(--ink);border-radius:15px;padding:8px;background:#fff;box-shadow:5px 5px #30274724;position:relative;overflow:hidden;animation:reveal .45s cubic-bezier(.2,.8,.2,1)}@keyframes reveal{from{transform:translateY(10px) scale(.9);opacity:0}to{transform:none;opacity:1}}.tarot .art{width:100%;height:100%;border-radius:8px;background:linear-gradient(145deg,#e4d8ff,#d8f4ff);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}.art img{width:100%;height:100%;object-fit:cover}.art .placeholder{text-align:center;font-size:2.2rem;padding:8px}.art .placeholder small{display:block;font-size:.65rem;letter-spacing:1px;margin-top:7px}.tarot .overlay{position:absolute;inset:8px;border:1px solid #ffffffb8;border-radius:7px;pointer-events:none}.rarity{font-size:.7rem;font-weight:900;letter-spacing:1.5px;color:#8d72d8;margin:8px 0 3px}.cardname{font-weight:900;line-height:1.25}.caption{font-size:.78rem;color:var(--muted);line-height:1.4;margin-top:5px}.collection{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.collection .tarot{width:100%;padding:5px;border-width:2px;box-shadow:none}.collection .tarot .overlay{inset:5px}.collection .tarot .rarity{font-size:.58rem}.collection .tarot .cardname{font-size:.78rem}.collection .tarot .caption{font-size:.68rem}.collection .item{min-width:0;text-align:center;background:white;border:1px solid var(--line);border-radius:12px;padding:7px}.share-x-btn{display:block;width:100%;margin-top:8px;padding:8px 6px;border:1px solid #302747;border-radius:9px;background:linear-gradient(100deg,#cdbaff,#bfeaff);color:#302747;font-size:.72rem;font-weight:900;line-height:1.35;cursor:pointer}.share-x-btn:hover{filter:brightness(.97);transform:translateY(-1px)}.collection .item.locked{filter:grayscale(1);opacity:.55}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.toolbar select{border:1px solid var(--line);border-radius:9px;padding:8px;background:#fff}.status{margin-top:10px;color:var(--muted);font-size:.82rem;min-height:1.3em}.foot{text-align:center;color:#81779a;font-size:.75rem;margin-top:22px;line-height:1.6}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.collection{grid-template-columns:repeat(2,minmax(0,1fr))}.box{padding:14px}.hero{padding:23px 12px}.nav button{font-size:.8rem}}
+.secret-placeholder{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.6rem;font-size:2.2rem;background:linear-gradient(135deg,#e9ddff,#d9f3ff);color:#66518f;width:100%;height:100%;min-height:220px}.secret-placeholder small{font-size:.85rem;font-weight:800;letter-spacing:.2em}.streak-stat{background:linear-gradient(135deg,#fff0d8,#ffe4ef)!important}.latest-card{width:min(42vw,210px);max-width:100%;text-align:center;perspective:900px}.latest-card .tarot{width:100%;animation:cardFlipIn .8s cubic-bezier(.2,.8,.2,1) both;transform-origin:center}.latest-card .save-card-btn{width:100%;margin-top:8px;padding:8px 6px;border:1px solid var(--ink);border-radius:9px;background:linear-gradient(100deg,#cdbaff,#bfeaff);color:var(--ink);font-size:.75rem;font-weight:900}.latest-card.rarity-high .tarot{box-shadow:0 0 0 2px #b89bff,0 0 22px #9c78ff99,5px 5px #30274724}.latest-card.rarity-high .tarot:after{content:"✦ ✧ ✦";position:absolute;inset:0;display:grid;place-items:center;color:white;font-size:2rem;text-shadow:0 0 12px #8b5cff;pointer-events:none;animation:sparkle 1.4s ease-in-out 2}@keyframes cardFlipIn{0%{opacity:0;transform:rotateY(90deg) scale(.82)}65%{opacity:1;transform:rotateY(-8deg) scale(1.03)}100%{opacity:1;transform:rotateY(0) scale(1)}}@keyframes sparkle{0%,100%{opacity:0}50%{opacity:1}}@media(prefers-reduced-motion:reduce){.latest-card .tarot,.latest-card.rarity-high .tarot:after{animation:none}}</style></head>
+<body><div class="app">
+<header><div class="brand"><div class="logo">💜🩵</div><div>SiYu CardDesk<small>DAILY FORTUNE · TAROT GACHA</small></div></div><select class="language" id="lang" aria-label="Language"><option value="th">ไทย 🇹🇭</option><option value="en">English 🇬🇧</option><option value="ko">한국어 🇰🇷</option><option value="ja">日本語 🇯🇵</option></select></header>
+<section class="hero"><div class="eyebrow">A LOVE COLLECTION FOR SIYU</div><h1><span class="p">Si</span><span class="b">Yu</span> CarDie </h1><p id="subtitle">เปิดดวงประจำวัน แล้วสะสมการ์ดโมเมนต์ SiYu ในรูปแบบไพ่ทาโรต์ 💫</p><div class="player" id="player">PLAYER ID: กำลังโหลด…</div></section>
+<nav class="nav"><button class="active" data-panel="fortune" id="navFortune">🔮 ดวงวันนี้</button><button data-panel="gacha" id="navGacha">🎴 สุ่มการ์ด</button><button data-panel="album" id="navAlbum">📚 อัลบั้มของฉัน</button></nav>
+<section class="panel active" id="fortune"><div class="grid"><article class="box"><h2 id="fortuneHeading">Daily Fortune</h2><p class="desc" id="fortuneDesc">ดวงประจำวันของคุณ</p><div class="fortune" id="fortuneResult"><div><div style="font-size:2rem">🌙✨</div><strong id="fortuneWaiting">พร้อมเปิดดวงหรือยัง?</strong><p class="tiny" id="fortunePrompt">กดปุ่มด้านล่างเพื่อค้นพบพลังงานประจำวันนี้</p></div></div><div class="stats" id="fortuneStats"><div class="stat"><strong id="fortunePoints">0</strong><span id="fortunePointsLabel">Fortune Points</span></div><div class="stat"><strong id="fortuneCardCount">0</strong><span id="fortuneCardLabel">การ์ดที่มี</span></div><div class="stat"><strong id="fortuneCollectionPercent">0%</strong><span id="fortuneCollectionLabel">คอลเลกชัน</span></div><div class="stat streak-stat"><strong id="dailyStreakCount">🔥 0</strong><span id="dailyStreakLabel">Daily Streak</span></div></div><button class="btn primary" id="fortuneBtn">✨ เปิดดวงวันนี้</button><div class="status" id="fortuneStatus"></div></article>
+<article class="box"><h2 id="dailyHeading">Daily Gacha</h2><p class="desc" id="dailyDesc">สุ่มการ์ดฟรีได้วันละ 3 ใบ</p><div class="stats"><div class="stat"><strong id="drawLeft">3</strong><span id="leftLabel">สิทธิ์สุ่มวันนี้</span></div><div class="stat"><strong id="ownedCount">0</strong><span id="ownedLabel">การ์ดที่สะสมได้</span></div><div class="stat"><strong id="uniqueCount">0</strong><span id="uniqueLabel">แบบไม่ซ้ำ</span></div></div><button class="btn" id="goGacha">🎁 ไปเปิดซองการ์ด</button><p class="tiny" id="resetNote">รีเซ็ตทุกวันตามเวลาไทย (Asia/Bangkok)</p></article></div></section>
+<section class="panel" id="gacha"><article class="box"><h2 id="gachaHeading">Tarot Gacha Room</h2><p class="desc" id="gachaDesc">เปิดซองเพื่อค้นพบการ์ด SiYu · สุ่มฟรีวันละ 3 ใบ หลังเปิดดวงวันนี้</p><button class="btn primary" id="drawBtn">✨ สุ่มการ์ด 1 ใบ</button><div class="status" id="gachaStatus"></div><div class="gacha-wrap" id="latestCards"></div><p class="tiny" id="imageNote">ขอให้โชคดี</p></article></section>
+<section class="panel" id="album"><article class="box"><h2 id="albumHeading">My SiYu Tarot Album</h2><p class="desc" id="albumDesc">การ์ดที่สะสมจะถูกบันทึกไว้ในฐานข้อมูลออนไลน์</p><div class="stats"><div class="stat"><strong id="albumOwned">0</strong><span id="albumOwnedLabel">จำนวนการ์ดทั้งหมด</span></div><div class="stat"><strong id="albumUnique">0</strong><span id="albumUniqueLabel">แบบไม่ซ้ำ</span></div><div class="stat"><strong id="albumProgress">0%</strong><span id="albumProgressLabel">สะสมครบ</span></div></div><div class="toolbar"><select id="rarityFilter"><option value="all">ทุกระดับ</option><option>N</option><option>R</option><option>SR</option><option>SSR</option><option>UR</option></select><select id="ownedFilter"><option value="all">การ์ดทั้งหมด</option><option value="owned">มีแล้ว</option><option value="missing">ยังไม่มี</option></select></div><div id="collection" class="collection"></div><p class="tiny" id="albumNote">ข้อมูลเก็บใน Supabase และผูกกับ Player ID ของคุณ หากล้างข้อมูลเบราว์เซอร์จะต้องใช้ระบบกู้คืนในอนาคตเพื่อกลับเข้าบัญชีเดิม</p></article></section>
+<footer class="foot">A fan-made SiYu project · Made with 💜🩵<br>โปรเจกต์แฟนเมดเพื่อความสนุก ไม่เกี่ยวข้องกับศิลปิน</footer></div>
+<script>
+const $=id=>document.getElementById(id);
+const dict={
+th:{
+  subtitle:'เปิดดวงประจำวัน💫',
+  fortune:'🔮 ดวงวันนี้',
+  gacha:'🎴 สุ่มการ์ด',
+  album:'📚 อัลบั้มของฉัน',
+  fortuneHeading:'Daily Fortune',
+  fortuneDesc:'ดวงประจำวันของคุณ',
+  waiting:'พร้อมเปิดดวงหรือยัง?',
+  prompt:'กดปุ่มด้านล่างเพื่อค้นพบพลังงานประจำวันนี้',
+  fortuneBtn:'✨ เปิดดวงวันนี้',
+  daily:'Daily Gacha',
+  dailyDesc:'สุ่มการ์ดฟรีได้วันละ 3 ใบ',
+  left:'สิทธิ์สุ่มวันนี้',
+  owned:'การ์ดที่สะสมได้',
+  unique:'แบบไม่ซ้ำ',
+  go:'🎁 ไปเปิดซองการ์ด',
+  reset:'รีเซ็ตทุกวันตามเวลาไทย (Asia/Bangkok)',
+  gachaHeading:'Tarot Gacha Room',
+  gachaDesc:'สุ่มฟรีวันละ 3 ใบ หลังเปิดดวงวันนี้',
+  draw:'✨ สุ่มการ์ด 1 ใบ',
+  imageNote:'ขอให้โชคดี',
+  albumHeading:'My SiYu Tarot Album',
+  albumDesc:'การ์ดที่สะสมจะถูกบันทึกไว้ในฐานข้อมูลออนไลน์',
+  total:'จำนวนการ์ดทั้งหมด',
+  progress:'สะสมครบ',
+  albumNote:'ข้อมูลเก็บใน Supabase และผูกกับ Player ID ของคุณ หากล้างข้อมูลเบราว์เซอร์ ข้อมูลทั้งหมดอาจจะหายไป',
+  locked:'🔒 เปิดดวงก่อนเพื่อสุ่มการ์ด',
+  fortuneDone:'เปิดดวงวันนี้แล้ว ✨',
+  noDraws:'สิทธิ์สุ่มวันนี้ครบแล้ว พรุ่งนี้มาใหม่ 💫',
+  drawn:'สุ่มได้การ์ดแล้ว!',
+  error:'เกิดข้อผิดพลาด ลองใหม่อีกครั้ง',
+  new:'ใหม่',
+  duplicate:'ซ้ำ',
+  all:'การ์ดทั้งหมด',
+  have:'มีแล้ว',
+  missing:'ยังไม่มี',
+  pointsLabel:'Fortune Points', cardCountLabel:'การ์ดที่มี', collectionLabel:'คอลเลกชัน', luckyColorLabel:'สีมงคล', luckyItemLabel:'ไอเทมมงคล', missionLabel:'ภารกิจประจำวัน',
+  energyLabel:'พลังงานประจำวัน', fortuneFallback:'ขอให้วันนี้มีโมเมนต์เล็ก ๆ ที่ทำให้คุณยิ้มได้ 💜🩵',
+  colors:{purple:'สีม่วง',blue:'สีฟ้า',pink:'สีชมพู',white:'สีขาว',green:'สีเขียว',yellow:'สีเหลือง'},
+  items:{photocard:'โฟโต้การ์ด',earphones:'หูฟัง',notebook:'สมุดโน้ต',drink:'เครื่องดื่มแก้วโปรด',plushie:'ตุ๊กตา'},
+  missions:{music:'ฟังเพลงโปรดของ SiYu สักเพลง',kind:'ใจดีกับตัวเองและพักผ่อนให้เพียงพอ',memory:'ย้อนดูโมเมนต์ SiYu ที่ชอบหนึ่งโมเมนต์',share:'ส่งต่อความสุขหรือคำชมให้ใครสักคน'}
+},
 
-  <main class="card">
-    <div class="flowers" aria-hidden="true">💜 🌷⭐ 💙</div>
-    <p class="brand">SiYu Cardie</p>
-    <div class="pill">✦ A LITTLE PAUSE ✦</div>
-    <h1>ขออภัยนะคะ ♡<br>SiYu Cardie กำลังปิดปรับปรุง</h1>
-	<h1>We’re sorry ♡<br>SiYu Cardie is currently under maintenance.</h1>
-    <div class="divider"></div>
-    <p class="message">
-      <strong>น้องจะกลับมาในไม่ช้า</strong> ✨
-    </p>
-    <div class="hearts" aria-label="หัวใจสีม่วงและสีฟ้า">💜 💙 💙 💜</div>
-    <div class="footer">SEE YOU AGAIN SOON</div>
-  </main>
-</body>
-</html>
+en:{
+  subtitle:'Read your daily fortune 💫',
+  fortune:'🔮 Daily Fortune',
+  gacha:'🎴 Gacha',
+  album:'📚 My Album',
+  fortuneHeading:'Daily Fortune',
+  fortuneDesc:'Your daily fortune',
+  waiting:'Ready to read your fortune?',
+  prompt:'Tap the button below to discover today’s energy.',
+  fortuneBtn:'✨ Read Today’s Fortune',
+  daily:'Daily Gacha',
+  dailyDesc:'Get 3 free card draws per day',
+  left:'Draws left today',
+  owned:'Cards owned',
+  unique:'Unique cards',
+  go:'🎁 Open Card Packs',
+  reset:'Resets daily at Thailand time (Asia/Bangkok)',
+  gachaHeading:'Tarot Gacha Room',
+  gachaDesc:'Get 3 free card draws per day after reading your fortune',
+  draw:'✨ Draw 1 Card',
+  imageNote:'Good luck!',
+  albumHeading:'My SiYu Tarot Album',
+  albumDesc:'Your collected cards are saved in an online database.',
+  total:'Total cards',
+  progress:'Collection progress',
+  albumNote:'Your data is stored in Supabase and linked to your Player ID. If you clear your browser data, all your data may be lost.',
+  locked:'🔒 Read your fortune first to draw cards',
+  fortuneDone:'You’ve read today’s fortune! ✨',
+  noDraws:'You’ve used all your draws for today. Come back tomorrow! 💫',
+  drawn:'You got a card!',
+  error:'Something went wrong. Please try again.',
+  new:'NEW',
+  duplicate:'DUPLICATE',
+  all:'All cards',
+  have:'Collected',
+  missing:'Missing',
+  pointsLabel:'Fortune Points', cardCountLabel:'Cards owned', collectionLabel:'Collection', luckyColorLabel:'Lucky color', luckyItemLabel:'Lucky item', missionLabel:'Daily mission',
+  energyLabel:'YOUR DAILY ENERGY', fortuneFallback:'May a little moment keep you smiling today. 💜🩵',
+  colors:{purple:'Purple',blue:'Sky blue',pink:'Pink',white:'White',green:'Green',yellow:'Yellow'},
+  items:{photocard:'Photocard',earphones:'Earphones',notebook:'Notebook',drink:'Favorite drink',plushie:'Plushie'},
+  missions:{music:'Listen to a favorite SiYu song.',kind:'Be kind to yourself and get enough rest.',memory:'Revisit one favorite SiYu moment.',share:'Share a kind word or a little happiness with someone.'}
+},
+
+ko:{
+  subtitle:'오늘의 운세를 확인해 보세요 💫',
+  fortune:'🔮 오늘의 운세',
+  gacha:'🎴 카드 뽑기',
+  album:'📚 내 앨범',
+  fortuneHeading:'Daily Fortune',
+  fortuneDesc:'오늘의 운세',
+  waiting:'오늘의 운세를 확인할까요?',
+  prompt:'아래 버튼을 눌러 오늘의 에너지를 확인하세요.',
+  fortuneBtn:'✨ 오늘의 운세 보기',
+  daily:'데일리 가챠',
+  dailyDesc:'하루 3회 무료 카드 뽑기',
+  left:'오늘 남은 뽑기 횟수',
+  owned:'보유 카드',
+  unique:'중복 제외 카드',
+  go:'🎁 카드 팩 열기',
+  reset:'태국 시간(Asia/Bangkok) 기준으로 매일 초기화',
+  gachaHeading:'타로 가챠 룸',
+  gachaDesc:'오늘의 운세를 확인한 후 하루 3회 무료로 뽑을 수 있어요.',
+  draw:'✨ 카드 1장 뽑기',
+  imageNote:'행운을 빌어요!',
+  albumHeading:'My SiYu Tarot Album',
+  albumDesc:'수집한 카드는 온라인 데이터베이스에 저장돼요.',
+  total:'전체 카드 수',
+  progress:'컬렉션 진행률',
+  albumNote:'데이터는 Supabase에 저장되며 Player ID와 연결돼요. 브라우저 데이터를 삭제하면 모든 데이터가 사라질 수 있어요.',
+  locked:'🔒 먼저 오늘의 운세를 확인해야 카드를 뽑을 수 있어요.',
+  fortuneDone:'오늘의 운세를 확인했어요! ✨',
+  noDraws:'오늘의 무료 뽑기를 모두 사용했어요. 내일 다시 만나요! 💫',
+  drawn:'카드를 뽑았어요!',
+  error:'오류가 발생했어요. 다시 시도해 주세요.',
+  new:'NEW',
+  duplicate:'중복',
+  all:'전체 카드',
+  have:'보유',
+  missing:'미보유',
+  pointsLabel:'포춘 포인트', cardCountLabel:'보유 카드', collectionLabel:'컬렉션', luckyColorLabel:'행운의 색', luckyItemLabel:'행운의 아이템', missionLabel:'오늘의 미션',
+  energyLabel:'오늘의 에너지', fortuneFallback:'오늘도 작은 순간이 미소를 가져다주길 바라요. 💜🩵',
+  colors:{purple:'보라색',blue:'하늘색',pink:'분홍색',white:'흰색',green:'초록색',yellow:'노란색'},
+  items:{photocard:'포토카드',earphones:'이어폰',notebook:'노트',drink:'좋아하는 음료',plushie:'인형'},
+  missions:{music:'좋아하는 SiYu 노래를 들어 보세요.',kind:'자신에게 친절하게 대하고 충분히 쉬세요.',memory:'좋아하는 SiYu 순간을 다시 감상해 보세요.',share:'누군가에게 따뜻한 말이나 작은 행복을 전해 보세요.'}
+},
+
+ja:{
+  subtitle:'今日の運勢を占おう💫',
+  fortune:'🔮 今日の運勢',
+  gacha:'🎴 カードガチャ',
+  album:'📚 マイアルバム',
+  fortuneHeading:'Daily Fortune',
+  fortuneDesc:'あなたの今日の運勢',
+  waiting:'今日の運勢を占ってみる？',
+  prompt:'下のボタンを押して今日の運勢をチェックしよう。',
+  fortuneBtn:'✨ 今日の運勢を見る',
+  daily:'デイリーガチャ',
+  dailyDesc:'毎日3回無料でカードを引けます',
+  left:'今日の残り回数',
+  owned:'所持カード',
+  unique:'重複なし',
+  go:'🎁 カードパックを開く',
+  reset:'タイ時間（Asia/Bangkok）で毎日リセット',
+  gachaHeading:'タロットガチャルーム',
+  gachaDesc:'今日の運勢を確認すると、1日3回無料でカードを引けます。',
+  draw:'✨ カードを1枚引く',
+  imageNote:'幸運を祈っています！',
+  albumHeading:'My SiYu Tarot Album',
+  albumDesc:'集めたカードはオンラインデータベースに保存されます。',
+  total:'カード総数',
+  progress:'コレクション進捗',
+  albumNote:'データはSupabaseに保存され、Player IDに紐づいています。ブラウザのデータを削除すると、すべてのデータが失われる可能性があります。',
+  locked:'🔒 先に今日の運勢を確認してからカードを引いてください',
+  fortuneDone:'今日の運勢を確認しました！✨',
+  noDraws:'今日の無料回数を使い切りました。また明日！💫',
+  drawn:'カードを引きました！',
+  error:'エラーが発生しました。もう一度お試しください。',
+  new:'NEW',
+  duplicate:'重複',
+  all:'すべてのカード',
+  have:'所持済み',
+  missing:'未所持',
+  pointsLabel:'フォーチュンポイント', cardCountLabel:'所持カード', collectionLabel:'コレクション', luckyColorLabel:'ラッキーカラー', luckyItemLabel:'ラッキーアイテム', missionLabel:'今日のミッション',
+  energyLabel:'今日のエネルギー', fortuneFallback:'今日も小さな瞬間が笑顔につながりますように。💜🩵',
+  colors:{purple:'紫',blue:'水色',pink:'ピンク',white:'白',green:'緑',yellow:'黄色'},
+  items:{photocard:'フォトカード',earphones:'イヤホン',notebook:'ノート',drink:'お気に入りの飲み物',plushie:'ぬいぐるみ'},
+  missions:{music:'お気に入りのSiYuの曲を聴いてみよう。',kind:'自分に優しくして、しっかり休もう。',memory:'お気に入りのSiYuの瞬間を見返そう。',share:'誰かに優しい言葉や小さな幸せを届けよう。'}
+}
+  
+};
+let lang='th', state={player:null,cards:[],collection:[],fortune:null,drawsLeft:3};
+const t=k=>dict[lang][k]||dict.en[k]||k;
+async function api(path,body){const r=await fetch('/.netlify/functions/'+path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});const data=await r.json();if(!r.ok)throw new Error(data.error||'Request failed');return data}
+function token(){let v=localStorage.getItem('siyu-player-token');if(!v){v=crypto.randomUUID();localStorage.setItem('siyu-player-token',v)}return v}
+function bangkokDate(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Bangkok',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+function dateMinusOne(date){const [y,m,d]=date.split('-').map(Number);const dt=new Date(Date.UTC(y,m-1,d-1));return dt.toISOString().slice(0,10)}
+function streakKey(){return 'siyu-daily-streak:'+token()}
+function recordDailyStreak(){
+  const today=bangkokDate(), key=streakKey(); let saved={};
+  try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch{}
+  if(saved.lastDate!==today){saved.count=saved.lastDate===dateMinusOne(today)?Math.max(0,Number(saved.count)||0)+1:1;saved.lastDate=today;localStorage.setItem(key,JSON.stringify(saved))}
+  $('dailyStreakCount').textContent='🔥 '+(Number(saved.count)||1);
+  $('dailyStreakLabel').textContent=({th:'วันต่อเนื่อง',en:'Daily Streak',ko:'연속 출석',ja:'連続記録'})[lang]||'Daily Streak';
+}
+function updateStreakLabel(){const label=$('dailyStreakLabel');if(label)label.textContent=({th:'วันต่อเนื่อง',en:'Daily Streak',ko:'연속 출석',ja:'連続記録'})[lang]||'Daily Streak'}
+function showStatus(id,msg){$(id).textContent=msg||''}
+function setPanel(name){document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===name));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.panel===name));if(name==='album')renderAlbum()}
+function cardFilename(c){
+  // Resolve the local filename from the card slug, with sort_order as a fallback.
+  const slug=String(c.slug||'').toLowerCase().replace(/\.(jpg|jpeg|png|webp)$/i,'');
+  if(/^(sion-n|yushi-n|siyu-r|siyu-sr|siyu-ssr)-\d{3}$/.test(slug)) return slug;
+  const n=Number(c.sort_order||c.id);
+  if(n>=1&&n<=15) return `sion-n-${String(n).padStart(3,'0')}`;
+  if(n>=16&&n<=30) return `yushi-n-${String(n-15).padStart(3,'0')}`;
+  if(n>=31&&n<=40) return `siyu-r-${String(n-30).padStart(3,'0')}`;
+  if(n>=41&&n<=47) return `siyu-sr-${String(n-40).padStart(3,'0')}`;
+  if(n>=48&&n<=50) return `siyu-ssr-${String(n-47).padStart(3,'0')}`;
+  return '';
+}
+function cardImagePath(c){
+  // Full-resolution source is kept for saving card images.
+  const filename=cardFilename(c);
+  return c.image_url || (filename ? `/cards/${filename}.png` : '');
+}
+function cardThumbnailPath(c){
+  const filename=cardFilename(c);
+  return filename ? `/cards/thumbs/${filename}.webp` : cardImagePath(c);
+}
+function cardArt(c, revealed=true){
+  const secret=['SR','SSR'].includes(String(c.rarity||'').toUpperCase())&&!revealed;
+  const src=secret?'':cardThumbnailPath(c);
+  const art=secret
+    ? `<div class="placeholder secret-placeholder">🔒<small>SECRET</small></div>`
+    : src ? `<img src="${escapeHtml(src)}" loading="lazy" decoding="async" alt="${escapeHtml(c.name_en||c.slug||'SiYu card')}" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><div class="placeholder" hidden>💜🩵<small>${escapeHtml(c.slug||'SIYU MOMENT')}</small></div>`
+          : `<div class="placeholder">💜🩵<small>SIYU MOMENT</small></div>`;
+  return `<div class="tarot"><div class="art">${art}</div><div class="overlay"></div><div class="rarity">${escapeHtml(c.rarity||'N')} · ${escapeHtml(c.moment_tag||'SIYU')}</div><div class="cardname">${secret?'SECRET':escapeHtml(c.name_en||c.slug)}</div><div class="caption">${secret?'Unlock this card to reveal the moment.':escapeHtml(c.caption_en||'A little SiYu moment ✦')}</div></div>`
+}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function refresh(){const data=await api('me',{token:token()});state.player=data.player;state.cards=data.cards;state.collection=data.collection;state.drawsLeft=data.draws_left;state.fortune=data.fortune;renderStats();renderAlbum();$('player').textContent='PLAYER ID: '+state.player.player_id;$('drawLeft').textContent=state.drawsLeft;$('drawBtn').disabled=!state.fortune||state.drawsLeft<=0;$('fortuneBtn').disabled=!!state.fortune;$('fortuneBtn').textContent=state.fortune?t('fortuneDone'):t('fortuneBtn');$('fortuneStatus').textContent=state.fortune?t('fortuneDone'):'';renderFortune(state.fortune);if(state.fortune)recordDailyStreak();else updateStreakLabel()}
+function fortuneImagePath(f){
+  // Match the image filename to the fortune's English title, e.g. Lucky Orbit -> /fortune/lucky-orbit.gif
+  const title=String(f?.title_en||f?.title||'').normalize('NFKD').toLowerCase().trim();
+  const slug=title.replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  return slug ? `/fortune/${slug}.gif` : '';
+}
+function localizedField(f, key, fallback=''){
+  if(!f) return fallback;
+  return f[`${key}_${lang}`] ?? f[key] ?? fallback;
+}
+function localizedValue(value, group){
+  if(value==null || value==='') return '';
+  const key=String(value).trim().toLowerCase().replace(/[^a-z]+/g,'');
+  const aliases={
+    purple:'purple',violet:'purple',สีม่วง:'purple',보라색:'purple',紫:'purple',
+    blue:'blue',skyblue:'blue',lightblue:'blue',สีฟ้า:'blue',하늘색:'blue',水色:'blue',
+    pink:'pink',สีชมพู:'pink',분홍색:'pink',ピンク:'pink',
+    white:'white',สีขาว:'white',흰색:'white',白:'white',
+    green:'green',สีเขียว:'green',초록색:'green',緑:'green',
+    yellow:'yellow',สีเหลือง:'yellow',노란색:'yellow',黄色:'yellow',
+    photocard:'photocard',โฟโต้การ์ด:'photocard',포토카드:'photocard',フォトカード:'photocard',
+    earphones:'earphones',หูฟัง:'earphones',이어폰:'earphones',イヤホン:'earphones',
+    notebook:'notebook',สมุดโน้ต:'notebook',노트:'notebook',ノート:'notebook',
+    drink:'drink',favoritedrink:'drink',เครื่องดื่มแก้วโปรด:'drink',좋아하는음료:'drink',お気に入りの飲み物:'drink',
+    plushie:'plushie',ตุ๊กตา:'plushie',인형:'plushie',ぬいぐるみ:'plushie'
+  };
+  const canonical=aliases[key]||aliases[String(value).trim()]||key;
+  return dict[lang]?.[group]?.[canonical] || String(value);
+}
+function renderFortune(f){
+  if(!f){
+    $('fortuneResult').innerHTML=`<div><div style="font-size:2rem">🌙✨</div><strong id="fortuneWaiting">${escapeHtml(t('waiting'))}</strong><p class="tiny" id="fortunePrompt">${escapeHtml(t('prompt'))}</p></div>`;
+    return;
+  }
+  const title=localizedField(f,'title',localizedField(f,'title_en','Daily Fortune'));
+  const message=localizedField(f,'message',localizedField(f,'message_en',t('fortuneFallback')));
+  const color=localizedValue(localizedField(f,'lucky_color'),'colors');
+  const item=localizedValue(localizedField(f,'lucky_item'),'items');
+  const mission=localizedField(f,'daily_mission');
+  const src=fortuneImagePath(f);
+  $('fortuneResult').innerHTML=`<div class="fortune-content"><div style="font-size:2rem">🔮✨</div><div class="eyebrow">${escapeHtml(t('energyLabel'))}</div><h3>${escapeHtml(title)}</h3><img class="fortune-moment" src="${escapeHtml(src)}" alt="${escapeHtml(title)}" hidden><p>${escapeHtml(message)}</p>${color?`<p class="tiny"><b>${escapeHtml(t('luckyColorLabel'))}:</b> ${escapeHtml(color)}</p>`:''}${item?`<p class="tiny"><b>${escapeHtml(t('luckyItemLabel'))}:</b> ${escapeHtml(item)}</p>`:''}${mission?`<p class="tiny"><b>${escapeHtml(t('missionLabel'))}:</b> ${escapeHtml(mission)}</p>`:''}</div>`;
+  const img=$('fortuneResult').querySelector('.fortune-moment');
+  if(src){img.onload=()=>{img.hidden=false};img.onerror=()=>{img.hidden=true};}
+}
+function renderStats(){const total=state.collection.reduce((n,c)=>n+c.quantity,0),unique=state.collection.length,percent=state.cards.length?Math.round(unique/state.cards.length*100):0;$('ownedCount').textContent=total;$('uniqueCount').textContent=unique;$('albumOwned').textContent=total;$('albumUnique').textContent=unique;$('albumProgress').textContent=percent+'%';$('fortunePoints').textContent=Number(state.player?.fortune_points||0);$('fortuneCardCount').textContent=total;$('fortuneCollectionPercent').textContent=percent+'%';$('fortunePointsLabel').textContent=t('pointsLabel');$('fortuneCardLabel').textContent=t('cardCountLabel');$('fortuneCollectionLabel').textContent=t('collectionLabel')}
+async function saveCardImage(card,btn){ if(btn){btn.disabled=true;btn.textContent=({th:'กำลังสร้างรูป…',en:'Creating image…',ko:'이미지 만드는 중…',ja:'画像を作成中…'})[lang]||'Creating image…'}
+  try{
+    const w=720,h=1080,canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;const ctx=canvas.getContext('2d');
+    const bg=ctx.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#cbb8ff');bg.addColorStop(1,'#b8e8ff');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+    ctx.fillStyle='#fffdf9';ctx.strokeStyle='#302747';ctx.lineWidth=12;roundRect(ctx,34,34,w-68,h-68,30,true,true);
+    const src=cardImagePath(card);let img=null;
+    if(src){img=new Image();img.crossOrigin='anonymous';await new Promise(resolve=>{img.onload=()=>resolve(true);img.onerror=()=>resolve(false);img.src=src});if(!img.naturalWidth)img=null;}
+    const x=78,y=82,iw=w-156,ih=760;
+    if(img){const scale=Math.max(iw/img.width,ih/img.height),sw=iw/scale,sh=ih/scale,sx=(img.width-sw)/2,sy=(img.height-sh)/2;ctx.save();roundRect(ctx,x,y,iw,ih,18,false,false);ctx.clip();ctx.drawImage(img,sx,sy,sw,sh,x,y,iw,ih);ctx.restore()}else{ctx.fillStyle='#eee7ff';ctx.fillRect(x,y,iw,ih);ctx.fillStyle='#66518f';ctx.textAlign='center';ctx.font='bold 72px sans-serif';ctx.fillText('💜🩵',w/2,y+ih/2)}
+    ctx.textAlign='center';ctx.fillStyle='#8d72d8';ctx.font='bold 30px sans-serif';ctx.fillText(String(card.rarity||'N').toUpperCase()+' · '+String(card.moment_tag||'SIYU').toUpperCase(),w/2,900);
+    ctx.fillStyle='#302747';ctx.font='bold 43px sans-serif';const name=String(card.name_en||card.slug||'SIYU MOMENT');ctx.fillText(name.length>26?name.slice(0,23)+'…':name,w/2,960);
+    ctx.fillStyle='#786d91';ctx.font='26px sans-serif';ctx.fillText('SiYu CardDesk · A love collection for SiYu',w/2,1015);
+    const a=document.createElement('a');a.download='SiYu_'+String(card.slug||card.name_en||'Card').replace(/[^a-z0-9_-]+/gi,'_')+'.png';a.href=canvas.toDataURL('image/png');a.click();
+  }catch(err){console.error('Save card image failed:',err);alert(({th:'เซฟรูปไม่สำเร็จ ลองเปิดรูปการ์ดในแท็บใหม่หรือเช็กไฟล์รูปอีกครั้งนะคะ',en:'Could not save the image. Please check the card image URL.',ko:'이미지를 저장할 수 없어요. 카드 이미지 주소를 확인해 주세요.',ja:'画像を保存できませんでした。カード画像のURLを確認してください。'})[lang]||'Could not save image.')}
+  finally{if(btn){btn.disabled=false;btn.textContent=({th:'🖼️ เซฟรูปการ์ด',en:'🖼️ Save Card Image',ko:'🖼️ 카드 이미지 저장',ja:'🖼️ カード画像を保存'})[lang]||'🖼️ Save Card Image'}}
+}
+function roundRect(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill)ctx.fill();if(stroke)ctx.stroke()}
+function saveCardById(id,button){saveCardImage(window.__siyuDrawnCards[id],button);}
+function postCardToX(){const text='I vote for #NCTWISH on #2026MAMAVOTE';const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);window.open(url,'_blank','noopener,noreferrer')}
+function renderAlbum(){if(!state.cards.length)return;const rarity=$('rarityFilter').value,owned=$('ownedFilter').value;const ownedMap=new Map(state.collection.map(c=>[c.card_id,c.quantity]));$('collection').innerHTML=state.cards.filter(c=>(rarity==='all'||c.rarity===rarity)&&(owned==='all'||(owned==='owned'?ownedMap.has(c.id):!ownedMap.has(c.id)))).map(c=>`<div class="item ${ownedMap.has(c.id)?'':'locked'}">${cardArt(c, ownedMap.has(c.id)||!['SR','SSR'].includes(String(c.rarity||'').toUpperCase()))}<div class="tiny">×${ownedMap.get(c.id)||0}</div>${ownedMap.has(c.id)?'<button type="button" class="share-x-btn" onclick="postCardToX()">โพสต์ลง X เพื่อร่วมโหวต MAMA</button>':''}</div>`).join('')}
+async function init(){try{await refresh()}catch(e){showStatus('gachaStatus','Setup needed: deploy this project and configure Netlify/Supabase.');console.error(e)}}
+$('lang').addEventListener('change',e=>{lang=e.target.value;document.documentElement.lang=lang;Object.entries({subtitle:'subtitle',navFortune:'fortune',navGacha:'gacha',navAlbum:'album',fortuneHeading:'fortuneHeading',fortuneDesc:'fortuneDesc',fortuneWaiting:'waiting',fortunePrompt:'prompt',fortuneBtn:'fortuneBtn',dailyHeading:'daily',dailyDesc:'dailyDesc',leftLabel:'left',ownedLabel:'owned',uniqueLabel:'unique',goGacha:'go',resetNote:'reset',gachaHeading:'gachaHeading',gachaDesc:'gachaDesc',drawBtn:'draw',imageNote:'imageNote',albumHeading:'albumHeading',albumDesc:'albumDesc',albumOwnedLabel:'total',albumUniqueLabel:'unique',albumProgressLabel:'progress',albumNote:'albumNote'}).forEach(([id,k])=>{const el=$(id);if(el)el.textContent=t(k)});$('ownedFilter').options[0].text=t('all');$('ownedFilter').options[1].text=t('have');$('ownedFilter').options[2].text=t('missing');renderAlbum();renderStats();renderFortune(state.fortune);updateStreakLabel();if(state.fortune)$('fortuneStatus').textContent=t('fortuneDone')});
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>setPanel(b.dataset.panel)));$('goGacha').addEventListener('click',()=>setPanel('gacha'));$('rarityFilter').addEventListener('change',renderAlbum);$('ownedFilter').addEventListener('change',renderAlbum);
+$('fortuneBtn').addEventListener('click',async()=>{
+  const btn=$('fortuneBtn');
+  try{
+    btn.disabled=true;
+    showStatus('fortuneStatus','กำลังเปิดดวง...');
+
+    const r=await api('fortune',{token:token()});
+    state.fortune=r.fortune;
+    recordDailyStreak();
+
+    // แสดงผลดวงทันที ไม่ต้องรอ refresh
+    renderFortune(state.fortune);
+    showStatus('fortuneStatus',t('fortuneDone'));
+
+    // โหลดข้อมูลอื่นในเบื้องหลัง
+    refresh().catch(console.error);
+
+  }catch(e){
+    showStatus('fortuneStatus',e.message);
+  }finally{
+    btn.disabled=!!state.fortune;
+  }
+});
+$('drawBtn').addEventListener('click',async()=>{try{$('drawBtn').disabled=true;const r=await api('draw',{token:token()});const card=r.card;window.__siyuDrawnCards=window.__siyuDrawnCards||{};window.__siyuDrawnCards.__next=(window.__siyuDrawnCards.__next||0)+1;const cardKey=String(window.__siyuDrawnCards.__next);window.__siyuDrawnCards[cardKey]=card;const high=['R','SR','SSR','UR'].includes(String(card.rarity||'').toUpperCase());const wrapper=document.createElement('div');wrapper.className='latest-card'+(high?' rarity-high':'');wrapper.innerHTML=cardArt(card)+`<button type="button" class="save-card-btn" onclick="saveCardById('${cardKey.replace(/'/g, '')}',this)">🖼️ เซฟรูปการ์ด</button>`;$('latestCards').prepend(wrapper);showStatus('gachaStatus',t('drawn'));await refresh();setPanel('gacha')}catch(e){showStatus('gachaStatus',e.message||t('error'));$('drawBtn').disabled=false}});
+init();
+</script></body></html>
