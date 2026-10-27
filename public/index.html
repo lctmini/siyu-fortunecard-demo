@@ -278,7 +278,28 @@ function renderAlbum(){if(!state.cards.length)return;const rarity=$('rarityFilte
 async function init(){try{await refresh()}catch(e){showStatus('gachaStatus','Setup needed: deploy this project and configure Netlify/Supabase.');console.error(e)}}
 $('lang').addEventListener('change',e=>{lang=e.target.value;document.documentElement.lang=lang;Object.entries({subtitle:'subtitle',navFortune:'fortune',navGacha:'gacha',navAlbum:'album',fortuneHeading:'fortuneHeading',fortuneDesc:'fortuneDesc',fortuneWaiting:'waiting',fortunePrompt:'prompt',fortuneBtn:'fortuneBtn',dailyHeading:'daily',dailyDesc:'dailyDesc',leftLabel:'left',ownedLabel:'owned',uniqueLabel:'unique',goGacha:'go',resetNote:'reset',gachaHeading:'gachaHeading',gachaDesc:'gachaDesc',drawBtn:'draw',imageNote:'imageNote',albumHeading:'albumHeading',albumDesc:'albumDesc',albumOwnedLabel:'total',albumUniqueLabel:'unique',albumProgressLabel:'progress',albumNote:'albumNote'}).forEach(([id,k])=>{const el=$(id);if(el)el.textContent=t(k)});$('ownedFilter').options[0].text=t('all');$('ownedFilter').options[1].text=t('have');$('ownedFilter').options[2].text=t('missing');renderAlbum();renderStats();renderFortune(state.fortune);if(state.fortune)$('fortuneStatus').textContent=t('fortuneDone')});
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>setPanel(b.dataset.panel)));$('goGacha').addEventListener('click',()=>setPanel('gacha'));$('rarityFilter').addEventListener('change',renderAlbum);$('ownedFilter').addEventListener('change',renderAlbum);
-$('fortuneBtn').addEventListener('click',async()=>{try{const r=await api('fortune',{token:token()});state.fortune=r.fortune;await refresh();renderFortune(state.fortune);showStatus('fortuneStatus',t('fortuneDone'))}catch(e){showStatus('fortuneStatus',e.message)}});
+$('fortuneBtn').addEventListener('click',async()=>{
+  const btn=$('fortuneBtn');
+  try{
+    btn.disabled=true;
+    showStatus('fortuneStatus','กำลังเปิดดวง...');
+
+    const r=await api('fortune',{token:token()});
+    state.fortune=r.fortune;
+
+    // แสดงผลดวงทันที ไม่ต้องรอ refresh
+    renderFortune(state.fortune);
+    showStatus('fortuneStatus',t('fortuneDone'));
+
+    // โหลดข้อมูลอื่นในเบื้องหลัง
+    refresh().catch(console.error);
+
+  }catch(e){
+    showStatus('fortuneStatus',e.message);
+  }finally{
+    btn.disabled=!!state.fortune;
+  }
+});
 $('drawBtn').addEventListener('click',async()=>{try{$('drawBtn').disabled=true;const r=await api('draw',{token:token()});$('latestCards').insertAdjacentHTML('afterbegin',cardArt(r.card));showStatus('gachaStatus',t('drawn'));await refresh();setPanel('gacha')}catch(e){showStatus('gachaStatus',e.message||t('error'));$('drawBtn').disabled=false}});
 init();
 </script></body></html>
